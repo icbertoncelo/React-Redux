@@ -8,14 +8,17 @@ import * as FavoritesActions from '../../store/actions/favoritesActions';
 class Main extends Component {
   static propTypes = {
     addFavoriteRequest: PropTypes.func.isRequired,
-    favorites: PropTypes.arrayOf(
-      PropTypes.shape({
-        id: PropTypes.number,
-        name: PropTypes.string,
-        description: PropTypes.string,
-        url: PropTypes.string,
-      }),
-    ).isRequired,
+    favorites: PropTypes.shape({
+      loading: PropTypes.bool,
+      data: PropTypes.arrayOf(
+        PropTypes.shape({
+          id: PropTypes.number,
+          name: PropTypes.string,
+          description: PropTypes.string,
+          url: PropTypes.string,
+        }),
+      ),
+    }).isRequired,
   };
 
   state = {
@@ -45,8 +48,10 @@ class Main extends Component {
           <button type="submit">Add</button>
         </form>
 
+        {favorites.loading && <span>Loading...</span>}
+
         <ul>
-          {favorites.map(favorite => (
+          {favorites.data.map(favorite => (
             <li key={favorite.id}>
               <p>
                 <strong>{favorite.name}</strong> ({favorite.description})
