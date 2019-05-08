@@ -10,6 +10,7 @@ class Main extends Component {
     addFavoriteRequest: PropTypes.func.isRequired,
     favorites: PropTypes.shape({
       loading: PropTypes.bool,
+      error: PropTypes.oneOf([null, PropTypes.string]),
       data: PropTypes.arrayOf(
         PropTypes.shape({
           id: PropTypes.number,
@@ -49,6 +50,7 @@ class Main extends Component {
         </form>
 
         {favorites.loading && <span>Loading...</span>}
+        {!!favorites.error && <span style={{ color: '#f00' }}>{favorites.error}</span>}
 
         <ul>
           {favorites.data.map(favorite => (
